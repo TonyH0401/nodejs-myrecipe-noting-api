@@ -1,1 +1,3 @@
-demo message
+- use npm i to install dependcies
+- with nodemon use "npm i nodemon --save-dev"
+- you can either run with 'npm start' or 'npm run api', I recommend the latter
