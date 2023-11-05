@@ -118,7 +118,7 @@ router.post("/register", async (req, res) => {
     return res.status(200).json({
       code: 1,
       success: true,
-      message: "New Account added",
+      message: "New Account Added!",
     });
   } catch (error) {
     return res.status(500).json({
@@ -227,6 +227,8 @@ router.post("/login", async (req, res) => {
       code: 1,
       success: true,
       message: "Login layer 1 correct!",
+      accountID: accountObject._id,
+      accountEmail: accountObject.emailAddress,
     });
   } catch (error) {
     return res.status(500).json({
@@ -306,6 +308,8 @@ router.post("/otp", async (req, res) => {
       code: 1,
       success: true,
       message: "Login layer 2 correct! Welcome!",
+      accountID: accountObject._id,
+      accountEmail: accountObject.emailAddress,
     });
   } catch (error) {
     return res.status(500).json({
