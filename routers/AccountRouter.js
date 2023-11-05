@@ -6,8 +6,16 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const { sendMail } = require("sud-libs");
 const randomstring = require("randomstring");
+const { rateLimit } = require("express-rate-limit");
+// 5 request per 3min
+const limiter = rateLimit({
+  windowMs: 3 * 60 * 1000, // 3 minutes
+  max: 21, // Limit each IP to 21 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
-// custom functions
+// custom functions requirements
 const {
   validateNames,
   validateEmail,
@@ -29,7 +37,7 @@ const emailHostServer = {
 const AccountModel = require("../models/AccountModels");
 
 // routes
-router.get("/", (req, res) => {
+router.get("/", limiter, (req, res) => {
   return res.status(200).json({
     code: 1,
     success: true,
@@ -320,27 +328,9 @@ router.post("/otp", async (req, res) => {
   }
 });
 
-router.get("/demo", async (req, res) => {
-  // const email = "phugiale2912@gmail.com";
-  // let accountObject = await AccountModel.findOne({ emailAddress: email });
-  // let start = accountObject.updatedAt.getTime();
-  // let currentDate = new Date();
-  // let end = currentDate.getTime();
+router.get("/demo", (req, res) => {
 
-  // let between = (end - start) / 1000;
-  // console.log("seconds: " + between);
-
-  const date1 = new Date("2023-11-04T17:05:42.978+00:00");
-  const date2 = new Date("2023-11-04T18:30:15.123+00:00");
-
-  // Calculate the time difference in minutes
-  const timeDifferenceInMilliseconds = date2 - date1;
-  const timeDifferenceInMinutes = timeDifferenceInMilliseconds / 60000;
-
-  console.log(`Time difference in minutes: ${timeDifferenceInMinutes}`);
-  console.log(new Date());
-  console.log(date1);
-
+  
   let otp = randomstring.generate(12);
   return res.status(200).json({
     otp: otp,
