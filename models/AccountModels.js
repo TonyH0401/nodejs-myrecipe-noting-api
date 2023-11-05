@@ -13,6 +13,7 @@ const AccountModel = new Schema(
     isValidated: { type: Boolean, default: false },
     otpValidated: { type: String },
     failedLoginCounter: { type: Number, default: 0 },
+    failedLoginTimer: { type: String },
     // two_authen: { type: Boolean, default: false },
     // when create an account it is a temp password, user login with that temp password
     // they are redirected to the change password immediately, if they dont change, they are
