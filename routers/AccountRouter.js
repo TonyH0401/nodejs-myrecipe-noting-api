@@ -37,6 +37,7 @@ const emailHostServer = {
 const AccountModel = require("../models/AccountModels");
 
 // routes
+// this route has a limiter to prevent ddos
 router.get("/", limiter, (req, res) => {
   return res.status(200).json({
     code: 1,
@@ -328,12 +329,43 @@ router.post("/otp", async (req, res) => {
   }
 });
 
-router.get("/demo", (req, res) => {
-
-  
-  let otp = randomstring.generate(12);
+// do not do this ever!
+router.get("/nosql-injection-example", async (req, res) => {
+  let unwantedData = await AccountModel.find({
+    emailAddress: req.body.username,
+    accountPassword: req.body.password,
+  });
+  if (unwantedData.length == 0) {
+    return res.status(300).json({
+      code: 1,
+      success: false,
+      message: "No unwanted data!",
+    });
+  }
   return res.status(200).json({
-    otp: otp,
+    code: 1,
+    success: true,
+    message: "Unwanted data!",
+    data: unwantedData,
+  });
+});
+
+router.get("/demo", async (req, res) => {
+  // this is safe
+  let sanatize = "phugiale29122@gmail.com";
+  let data = await AccountModel.find({
+    // emailAddress: req.body.username,
+    // accountPassword: req.body.password,
+    // this is safe
+    emailAddress: sanatize.toString(),
+  });
+  if (data.length == 0) {
+    return res.status(300).json({
+      message: "It is empty!",
+    });
+  }
+  return res.status(200).json({
+    data: data,
   });
 });
 
