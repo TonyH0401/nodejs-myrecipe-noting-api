@@ -172,6 +172,45 @@ router.delete("/delete/:recipeid", async (req, res) => {
   }
 });
 
+router.post("/add/:recipeid", async (req, res) => {
+  try {
+    const { recipeid } = req.params;
+    // this is an array of object, remember to have the correct input array
+    const { newIngredientList } = req.body;
+    const recipeSearchID = recipeid.toString();
+    if (!recipeSearchID.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Invalid mongoose ObjectId for recipe!",
+      });
+    }
+    let recipeExist = await RecipeModel.findById(recipeSearchID);
+    if (!recipeExist) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Recipe does not exist!",
+      });
+    }
+    recipeExist.ingredientsList =
+      recipeExist.ingredientsList.concat(newIngredientList);
+    let result = await recipeExist.save();
+    return res.status(200).json({
+      code: 1,
+      success: true,
+      message: `Added new ingredient to ${recipeExist.recipeName}`,
+      data: result,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      code: 0,
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 router.delete("/remove/:recipeid/:ingredientid", async (req, res) => {
   try {
     const { recipeid, ingredientid } = req.params;
