@@ -17,6 +17,7 @@ router.get("/", (req, res) => {
   });
 });
 
+// this one use the accountid from the headers
 router.get("/all", async (req, res) => {
   try {
     // get the accountid from the headers, this will be send from the FE
@@ -58,7 +59,42 @@ router.get("/all", async (req, res) => {
       code: 1,
       success: true,
       message: "Recipe list success!",
+      count: recipeList.length,
       data: recipeList,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      code: 0,
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.get("/recipe/:recipeid", async (req, res) => {
+  try {
+    const { recipeid } = req.params;
+    const searchID = recipeid.toString();
+    if (!searchID.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Invalid mongoose ObjectId for recipe!",
+      });
+    }
+    let recipeExist = await RecipeModel.findById(searchID);
+    if (!recipeExist) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "No recipe for this id!",
+      });
+    }
+    return res.status(200).json({
+      code: 1,
+      success: true,
+      message: "Recipe found!",
+      data: recipeExist,
     });
   } catch (error) {
     return res.status(500).json({
