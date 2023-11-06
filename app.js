@@ -26,6 +26,8 @@ app.get("/", (req, res) => {
 // New Routers Define
 const AccountRouter = require("./routers/AccountRouter.js");
 app.use("/accounts", AccountRouter);
+const RecipeRouter = require("./routers/RecipeRouter.js");
+app.use("/recipes", RecipeRouter);
 
 // error handling
 app.use((req, res, next) => {
