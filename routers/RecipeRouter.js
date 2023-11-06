@@ -137,6 +137,97 @@ router.post("/create", async (req, res) => {
   }
 });
 
+router.delete("/delete/:recipeid", async (req, res) => {
+  try {
+    const { recipeid } = req.params;
+    const searchID = recipeid.toString();
+    if (!searchID.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Invalid mongoose ObjectId for recipe!",
+      });
+    }
+    let recipeExist = await RecipeModel.findById(searchID);
+    if (!recipeExist) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Recipe does not exist!",
+      });
+    }
+    let result = await RecipeModel.findByIdAndDelete(searchID);
+    return res.status(200).json({
+      code: 1,
+      success: true,
+      message: `${result.recipeName} recipe deleted!`,
+      data: recipeExist,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      code: 0,
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.delete("/remove/:recipeid/:ingredientid", async (req, res) => {
+  try {
+    const { recipeid, ingredientid } = req.params;
+    const recipeSearchID = recipeid.toString();
+    if (!recipeSearchID.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Invalid mongoose ObjectId for recipe!",
+      });
+    }
+    let recipeExist = await RecipeModel.findById(recipeSearchID);
+    if (!recipeExist) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Recipe does not exist!",
+      });
+    }
+    const ingredientSearchID = ingredientid.toString();
+    if (!ingredientSearchID.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Invalid mongoose ObjectId for ingredient!",
+      });
+    }
+    let foundObject = recipeExist.ingredientsList.find(
+      (index) => index._id == ingredientSearchID
+    );
+    if (!foundObject) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Ingredient not found!",
+      });
+    }
+    recipeExist.ingredientsList = recipeExist.ingredientsList.filter(
+      (index) => index._id != foundObject._id
+    );
+    let result = await recipeExist.save();
+    return res.status(200).json({
+      code: 1,
+      success: true,
+      message: "Removed ingredient!",
+      data: foundObject,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      code: 0,
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 router.get("/demo", (req, res) => {
   try {
     const { accountid } = req.headers;
