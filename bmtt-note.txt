@@ -10,6 +10,7 @@
 - tick rate block, this prevent ddos (1) x
 - nosql injection block, let it be string (1) x
 - hide data in the body using post and get (1) x
+- hide userid to search for recipe in the headers or encrypt in the url (1) x
 
 - after validate user must change their password one again or after login the 1st time must change password (1)
 - cookie and session setup to block (1)
