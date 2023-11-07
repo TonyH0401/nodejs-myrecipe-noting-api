@@ -249,45 +249,76 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/verify", async (req, res) => {
-  try {
-    const { token } = req.query;
-    // verify jwt
-    let decodedResult = "";
-    jwt.verify(token, jwtSecretKey, function (err, decoded) {
-      if (err) {
+  const { token } = req.query;
+  jwt.verify(token, jwtSecretKey, async (err, decoded) => {
+    if (err) {
+      return res.status(501).json({
+        code: 0,
+        success: false,
+        message: err,
+        message_2: "JWT error!",
+      });
+    }
+    await AccountModel.findByIdAndUpdate(
+      decoded.id,
+      { isValidated: true },
+      { new: true }
+    )
+      .then((account) => {
+        return res.status(200).json({
+          code: 1,
+          success: true,
+          message: `${account.emailAddress}'s status is ${account.isValidated}`,
+        });
+      })
+      .catch((error) => {
         return res.status(500).json({
           code: 0,
           success: false,
-          message: err,
-          message_2: "JWT error!",
+          message: error.message,
         });
-      }
-      decodedResult = decoded;
-    });
-    // check if account existed
-    let accountFound = await AccountModel.findById(decodedResult.id);
-    if (!accountFound) {
-      return res.status(300).json({
-        code: 1,
-        success: false,
-        message: "Account does not exist!",
       });
-    }
-    // update account validation
-    accountFound.isValidated = true;
-    let result = await accountFound.save();
-    return res.status(200).json({
-      code: 1,
-      success: true,
-      message: "JWT for Account is validated!",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      code: 0,
-      success: false,
-      message: error.message,
-    });
-  }
+  });
+
+  // try {
+  //   const { token } = req.query;
+  //   // verify jwt
+  //   let decodedResult = "";
+  //   jwt.verify(token, jwtSecretKey, async (err, decoded) => {
+  //     if (err) {
+  //       return res.json({
+  //         code: 0,
+  //         success: false,
+  //         message: err,
+  //         message_2: "JWT error!",
+  //       });
+  //     }
+  //     decodedResult = decoded;
+  //   });
+  //   // check if account existed
+  //   let accountFound = await AccountModel.findById(decodedResult.id);
+  //   if (!accountFound) {
+  //     return res.status(300).json({
+  //       code: 1,
+  //       success: false,
+  //       message: "Account does not exist!",
+  //     });
+  //   }
+  //   // update account validation
+  //   accountFound.isValidated = true;
+  //   let result = await accountFound.save();
+  //   return res.status(200).json({
+  //     code: 1,
+  //     success: true,
+  //     message: "JWT for Account is validated!",
+  //   });
+  // } catch (error) {
+  //   return res.status(500).json({
+  //     code: 0,
+  //     success: false,
+  //     message: error.message,
+  //   });
+  // }
 });
 
 router.post("/otp", async (req, res) => {

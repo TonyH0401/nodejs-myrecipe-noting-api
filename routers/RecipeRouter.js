@@ -267,6 +267,45 @@ router.delete("/remove/:recipeid/:ingredientid", async (req, res) => {
   }
 });
 
+router.put("/edit/:recipeid", async (req, res) => {
+  // change the recipeName and ingredient using the _id, ingredient is in an array
+  try {
+    const { recipeid } = req.params;
+    const { recipeName, recipeNote, ingredientsList } = req.body;
+    const recipeSearchID = recipeid.toString();
+    if (!recipeSearchID.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Invalid mongoose ObjectId for recipe!",
+      });
+    }
+    let recipeExist = await RecipeModel.findById(recipeSearchID);
+    if (!recipeExist) {
+      return res.status(300).json({
+        code: 1,
+        success: false,
+        message: "Recipe does not exist!",
+      });
+    }
+    recipeExist.recipeName = recipeName || recipeExist.recipeName;
+    recipeExist.recipeNote = recipeNote || recipeExist.recipeNote;
+    let result = await recipeExist.save();
+    return res.status(200).json({
+      code: 1,
+      success: true,
+      message: "Updated!",
+      data: result,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      code: 0,
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 router.get("/demo", (req, res) => {
   try {
     const { accountid } = req.headers;
