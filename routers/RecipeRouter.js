@@ -289,12 +289,10 @@ router.put("/edit/:recipeid", async (req, res) => {
         message: "Recipe does not exist!",
       });
     }
-
-    let clonedArray = [...recipeExist.ingredientsList];
-    console.log(clonedArray);
+    // updating-1
     if (ingredientsList.length != 0) {
       ingredientsList.forEach((newIngredient) => {
-        let objFound = clonedArray.find(
+        let objFound = recipeExist.ingredientsList.find(
           (oldIngredient) => oldIngredient._id == newIngredient.id
         );
         if (objFound) {
@@ -305,11 +303,7 @@ router.put("/edit/:recipeid", async (req, res) => {
         }
       });
     }
-    return res.status(200).json({
-      success: true,
-      data: clonedArray,
-    });
-    // updating
+    // updating-2
     recipeExist.recipeName = recipeName || recipeExist.recipeName;
     recipeExist.recipeNote = recipeNote || recipeExist.recipeNote;
     let result = await recipeExist.save();
