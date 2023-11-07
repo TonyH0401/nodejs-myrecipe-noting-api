@@ -269,6 +269,7 @@ router.delete("/remove/:recipeid/:ingredientid", async (req, res) => {
 
 router.put("/edit/:recipeid", async (req, res) => {
   // change the recipeName and ingredient using the _id, ingredient is in an array
+  // ingredent is an array
   try {
     const { recipeid } = req.params;
     const { recipeName, recipeNote, ingredientsList } = req.body;
@@ -288,6 +289,27 @@ router.put("/edit/:recipeid", async (req, res) => {
         message: "Recipe does not exist!",
       });
     }
+
+    let clonedArray = [...recipeExist.ingredientsList];
+    console.log(clonedArray);
+    if (ingredientsList.length != 0) {
+      ingredientsList.forEach((newIngredient) => {
+        let objFound = clonedArray.find(
+          (oldIngredient) => oldIngredient._id == newIngredient.id
+        );
+        if (objFound) {
+          objFound.ingredientName =
+            newIngredient.ingredientName || objFound.ingredientName;
+          objFound.ingredientQuantity =
+            newIngredient.ingredientQuantity || objFound.ingredientQuantity;
+        }
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      data: clonedArray,
+    });
+    // updating
     recipeExist.recipeName = recipeName || recipeExist.recipeName;
     recipeExist.recipeNote = recipeNote || recipeExist.recipeNote;
     let result = await recipeExist.save();

@@ -12,6 +12,8 @@
 - hide data in the body using post and get (1) x
 - hide userid to search for recipe in the headers or encrypt in the url (1) x
 
+- splitting the website into 2 side FE and BE
+
 - after validate user must change their password one again or after login the 1st time must change password (1)
 - cookie and session setup to block (1)
 - mã hóa dữ liệu -> token để xác thực quyền truy cập (admin level and normal level) (1)

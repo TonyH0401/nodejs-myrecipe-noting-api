@@ -106,6 +106,7 @@ router.post("/register", async (req, res) => {
     const jwtToken = jwt.sign({ id: newAccount._id }, jwtSecretKey);
     // console.log(`> http://localhost:8080/accounts/verify?token=${jwtToken}`);
     // send email
+    // probably send the FE link not the BE
     const options = {
       from: emailHostServer.user,
       to: emailAddress,
