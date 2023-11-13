@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const { sendMail } = require("sud-libs");
 const randomstring = require("randomstring");
 const { rateLimit } = require("express-rate-limit");
-// 5 request per 3min
+// 21 requests limit per 3 min
 const limiter = rateLimit({
   windowMs: 3 * 60 * 1000, // 3 minutes
   max: 21, // Limit each IP to 21 requests per `window` (here, per 15 minutes)
@@ -37,7 +37,8 @@ const emailHostServer = {
 const AccountModel = require("../models/AccountModels");
 
 // routes
-// this route has a limiter to prevent ddos
+//this route has a limiter middleware to prevent ddos
+// this is just a demo, it will be implemented in FE
 router.get("/", limiter, (req, res) => {
   return res.status(200).json({
     code: 1,
@@ -89,7 +90,7 @@ router.post("/register", async (req, res) => {
         message: passwordValidation.message,
       });
     }
-    // using bycrypt to hash password when saving to database
+    // use bycrypt to hash the password before saving to the database
     let hashedPassword = "";
     await bcrypt.hash(password1, saltRounds).then((hash) => {
       hashedPassword = hash;
@@ -105,8 +106,9 @@ router.post("/register", async (req, res) => {
     // create jwt token for the _id or id
     const jwtToken = jwt.sign({ id: newAccount._id }, jwtSecretKey);
     // console.log(`> http://localhost:8080/accounts/verify?token=${jwtToken}`);
-    // send email
-    // probably send the FE link not the BE
+    // send email containing the jwt token and link
+    // will change this to the FE link not the BE link
+    // the FE link will fetch the /verify BE link
     const options = {
       from: emailHostServer.user,
       to: emailAddress,
@@ -190,7 +192,7 @@ router.post("/login", async (req, res) => {
       emailFound.emailObject.accountPassword
     );
     if (!accountPasswordMatch.success) {
-      // increase the login failed counter
+      // increase the login failed counter by 1
       accountObject.failedLoginCounter = accountObject.failedLoginCounter + 1;
       let result = await accountObject.save();
       // assign time to when user login failed the 3rd time
