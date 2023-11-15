@@ -61,7 +61,7 @@ router.post("/register", async (req, res) => {
     let emailValidation = await validateEmail(emailAddress);
     if (emailValidation.success == false) {
       return res.status(300).json({
-        code: 0,
+        code: 1,
         success: false,
         message: emailValidation.message,
       });
