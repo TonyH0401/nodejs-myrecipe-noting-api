@@ -107,7 +107,7 @@ router.post("/register", async (req, res) => {
     const jwtToken = jwt.sign({ id: newAccount._id }, jwtSecretKey);
     // console.log(`> http://localhost:8080/accounts/verify?token=${jwtToken}`);
     // send email containing the jwt token and link
-    // will change this to the FE link not the BE link
+    // will change this to the FE link not the BE link 3030
     // the FE link will fetch the /verify BE link
     const options = {
       from: emailHostServer.user,
@@ -118,7 +118,7 @@ router.post("/register", async (req, res) => {
       html: mailForm({
         caption: `Validate your Account!`,
         content: `
-              <a href="http://localhost:8080/accounts/verify?token=${jwtToken}" target="_blank">Click here to verify!</a>
+              <a href="http://localhost:3030/accounts/verify?token=${jwtToken}" target="_blank">Click here to verify!</a>
           `,
       }),
     };
@@ -256,7 +256,7 @@ router.get("/verify", async (req, res) => {
   jwt.verify(token, jwtSecretKey, async (err, decoded) => {
     if (err) {
       return res.status(501).json({
-        code: 0,
+        code: 1,
         success: false,
         message: err,
         message_2: "JWT error!",
