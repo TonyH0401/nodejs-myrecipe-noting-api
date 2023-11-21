@@ -4,15 +4,23 @@ const createError = require("http-errors");
 const path = require("path");
 const mongoDatabase = require("./databases/mongoose.js");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 // .env
 const port = process.env.PORT || 7070;
+const origin = process.env.ORIGIN || 2020;
 
 // init app
 const app = express();
 
 // app use
 app.use(express.json());
+// app.use(cors())
+app.use(
+  cors({
+    origin: origin,
+  })
+);
 
 // default get
 app.get("/", (req, res) => {
