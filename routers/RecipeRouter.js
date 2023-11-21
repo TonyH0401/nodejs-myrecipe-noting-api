@@ -51,8 +51,9 @@ router.get("/all", async (req, res) => {
     if (recipeList.length == 0) {
       return res.status(300).json({
         code: 1,
-        success: false,
+        success: true,
         message: "Recipe documents are empty!",
+        count: recipeList.length,
       });
     }
     return res.status(200).json({
