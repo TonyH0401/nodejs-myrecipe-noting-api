@@ -363,6 +363,23 @@ router.post("/otp", async (req, res) => {
   }
 });
 
+router.get("/info/:email", async (req, res) => {
+  const { email } = req.params;
+  let data = await accountExistEmail(email);
+  if (!data.success) {
+    return res.status(300).json({
+      code: data.code,
+      success: false,
+      message: data.message,
+    });
+  }
+  return res.status(200).json({
+    code: 1,
+    success: true,
+    info: data.emailObject,
+  });
+});
+
 // do not do this ever!
 router.get("/nosql-injection-example", async (req, res) => {
   let unwantedData = await AccountModel.find({
