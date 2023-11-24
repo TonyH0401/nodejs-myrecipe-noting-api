@@ -107,7 +107,7 @@ router.get("/recipe/:recipeid", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  const { recipeName, ingredientsList, recipeAuthor } = req.body;
+  const { recipeName, ingredientsList, recipeNote, recipeAuthor } = req.body;
   try {
     let accountExist = await AccountModel.findById(recipeAuthor);
     if (!accountExist) {
@@ -120,6 +120,7 @@ router.post("/create", async (req, res) => {
     let newRecipe = await RecipeModel({
       recipeName: recipeName,
       ingredientsList: ingredientsList,
+      recipeNote: recipeNote,
       recipeAuthor: recipeAuthor,
     });
     let result = await newRecipe.save();
