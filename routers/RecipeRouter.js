@@ -17,6 +17,8 @@ router.get("/", (req, res) => {
   });
 });
 
+// GET all recipes of user
+// /recipes/all
 // this one use the accountid from the headers
 router.get("/all", async (req, res) => {
   try {
@@ -71,7 +73,8 @@ router.get("/all", async (req, res) => {
     });
   }
 });
-
+// GET singular recipe by recipe id
+// /recipes/recipe/:recipeid
 router.get("/recipe/:recipeid", async (req, res) => {
   try {
     const { recipeid } = req.params;
@@ -105,7 +108,8 @@ router.get("/recipe/:recipeid", async (req, res) => {
     });
   }
 });
-
+// POST a recipe
+// /recipes/create
 router.post("/create", async (req, res) => {
   const { recipeName, ingredientsList, recipeNote, recipeAuthor } = req.body;
   try {
@@ -138,7 +142,8 @@ router.post("/create", async (req, res) => {
     });
   }
 });
-
+// DELETE singular recipe by recipe id
+// /recipes/delete/:recipeid
 router.delete("/delete/:recipeid", async (req, res) => {
   try {
     const { recipeid } = req.params;
@@ -268,14 +273,17 @@ router.delete("/remove/:recipeid/:ingredientid", async (req, res) => {
     });
   }
 });
-
+// PUT (edit) a singular recipe by recipe id
+// /recipes/edit/:recipeid
 router.put("/edit/:recipeid", async (req, res) => {
-  // change the recipeName and ingredient using the _id, ingredient is in an array
-  // ingredent is an array
   try {
+    // get recipeid from params
     const { recipeid } = req.params;
-    const { recipeName, recipeNote, ingredientsList } = req.body;
     const recipeSearchID = recipeid.toString();
+    // get recipeName, recipeNote and ingredientsList from body
+    // ingredientsList is an array of object
+    const { recipeName, recipeNote, ingredientsList } = req.body;
+    // check if recipeid is valid mongoose id
     if (!recipeSearchID.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(300).json({
         code: 1,
@@ -283,7 +291,9 @@ router.put("/edit/:recipeid", async (req, res) => {
         message: "Invalid mongoose ObjectId for recipe!",
       });
     }
+    // find recipe by recipeid
     let recipeExist = await RecipeModel.findById(recipeSearchID);
+    // if recipe does not exist, return error
     if (!recipeExist) {
       return res.status(300).json({
         code: 1,
@@ -291,23 +301,12 @@ router.put("/edit/:recipeid", async (req, res) => {
         message: "Recipe does not exist!",
       });
     }
-    // updating-1
-    if (ingredientsList.length != 0) {
-      ingredientsList.forEach((newIngredient) => {
-        let objFound = recipeExist.ingredientsList.find(
-          (oldIngredient) => oldIngredient._id == newIngredient.id
-        );
-        if (objFound) {
-          objFound.ingredientName =
-            newIngredient.ingredientName || objFound.ingredientName;
-          objFound.ingredientQuantity =
-            newIngredient.ingredientQuantity || objFound.ingredientQuantity;
-        }
-      });
-    }
-    // updating-2
+    // update ingredientsList
+    recipeExist.ingredientsList = ingredientsList;
+    // update recipeName and recipeNote
     recipeExist.recipeName = recipeName || recipeExist.recipeName;
     recipeExist.recipeNote = recipeNote || recipeExist.recipeNote;
+    // save to database
     let result = await recipeExist.save();
     return res.status(200).json({
       code: 1,
