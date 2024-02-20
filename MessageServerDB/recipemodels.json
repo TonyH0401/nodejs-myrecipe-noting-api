@@ -1,0 +1,174 @@
+[{
+  "_id": {
+    "$oid": "65486c3e2d46adfc9b10124b"
+  },
+  "recipeName": "Gujoin Chicken",
+  "ingredientsList": [
+    {
+      "ingredientName": "Chicken Breast",
+      "ingredientQuantity": 3,
+      "_id": {
+        "$oid": "65486c3e2d46adfc9b10124c"
+      }
+    },
+    {
+      "ingredientName": "Chicken Egg",
+      "ingredientQuantity": 2,
+      "_id": {
+        "$oid": "65486c3e2d46adfc9b10124d"
+      }
+    }
+  ],
+  "recipeAuthor": {
+    "$oid": "654725792f8f9819667ee85e"
+  },
+  "createdAt": {
+    "$date": "2023-11-06T04:31:58.491Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-06T04:31:58.491Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65488cfb5e12f92edc7c2aa8"
+  },
+  "recipeName": "Korean Beef Gumbo",
+  "ingredientsList": [
+    {
+      "ingredientName": "Kimchi based soup",
+      "ingredientQuantity": 10,
+      "_id": {
+        "$oid": "65488cfb5e12f92edc7c2aaa"
+      }
+    },
+    {
+      "ingredientName": "Kobe Beef slice",
+      "ingredientQuantity": 10,
+      "_id": {
+        "$oid": "6548ac6d7f5243ebdf050d2c"
+      }
+    },
+    {
+      "ingredientName": "Lobster meat",
+      "ingredientQuantity": 15,
+      "_id": {
+        "$oid": "6548ac6d7f5243ebdf050d2d"
+      }
+    }
+  ],
+  "recipeAuthor": {
+    "$oid": "654725792f8f9819667ee85e"
+  },
+  "createdAt": {
+    "$date": "2023-11-06T06:51:39.400Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-07T05:25:55.409Z"
+  },
+  "__v": 6,
+  "recipeNote": "Tasted the best when slow cook"
+},{
+  "_id": {
+    "$oid": "65657ef283c0fd7ac0dc5485"
+  },
+  "recipeName": "Blue Crystal",
+  "ingredientsList": [
+    {
+      "ingredientName": "Metalin (gram)",
+      "ingredientQuantity": 200,
+      "_id": {
+        "$oid": "65658e21037d82a95f3301fb"
+      }
+    },
+    {
+      "ingredientName": "Water (ml)",
+      "ingredientQuantity": 100,
+      "_id": {
+        "$oid": "65658e21037d82a95f3301fc"
+      }
+    },
+    {
+      "ingredientName": "Milk (ml)",
+      "ingredientQuantity": 20,
+      "_id": {
+        "$oid": "65658e21037d82a95f3301fd"
+      }
+    }
+  ],
+  "recipeNote": "Clean environment, No Germs, Hot Beaker",
+  "recipeAuthor": {
+    "$oid": "654725792f8f9819667ee85e"
+  },
+  "createdAt": {
+    "$date": "2023-11-28T05:47:30.978Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-28T06:52:17.282Z"
+  },
+  "__v": 5
+},{
+  "_id": {
+    "$oid": "656a03d6e4ed0ba7cd4b7fe2"
+  },
+  "recipeName": "Blue Crystal",
+  "ingredientsList": [
+    {
+      "ingredientName": "Metalin (gram)",
+      "ingredientQuantity": 100,
+      "_id": {
+        "$oid": "656a03dfe4ed0ba7cd4b7ff7"
+      }
+    },
+    {
+      "ingredientName": "Flour (gram)",
+      "ingredientQuantity": 20,
+      "_id": {
+        "$oid": "656a03dfe4ed0ba7cd4b7ff8"
+      }
+    }
+  ],
+  "recipeNote": "Cook slow",
+  "recipeAuthor": {
+    "$oid": "656a020be4ed0ba7cd4b7f80"
+  },
+  "createdAt": {
+    "$date": "2023-12-01T16:03:34.637Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-01T16:03:43.065Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "656a05d3e4ed0ba7cd4b8027"
+  },
+  "recipeName": "Test mobile",
+  "ingredientsList": [
+    {
+      "ingredientName": "Test",
+      "ingredientQuantity": 1,
+      "_id": {
+        "$oid": "656a05d3e4ed0ba7cd4b8028"
+      }
+    },
+    {
+      "ingredientName": "Test 2",
+      "ingredientQuantity": 2,
+      "_id": {
+        "$oid": "656a05d3e4ed0ba7cd4b8029"
+      }
+    }
+  ],
+  "recipeNote": "Test",
+  "recipeAuthor": {
+    "$oid": "656a020be4ed0ba7cd4b7f80"
+  },
+  "createdAt": {
+    "$date": "2023-12-01T16:12:03.486Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-01T16:12:03.486Z"
+  },
+  "__v": 0
+}]

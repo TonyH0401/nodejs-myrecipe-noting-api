@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "654725792f8f9819667ee85e"
+  },
+  "firstName": "Phú",
+  "lastName": "Lê",
+  "emailAddress": "phugiale2912@gmail.com",
+  "phoneNumber": "0852068832",
+  "accountPassword": "$2b$10$bOkg6lJuywIokJCyS3DkS.GZzAfyKHxRDFlkIrhoOLGWn6BCQCrM2",
+  "isValidated": true,
+  "failedLoginCounter": 0,
+  "createdAt": {
+    "$date": "2023-11-05T05:17:45.703Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-14T15:03:34.120Z"
+  },
+  "__v": 0,
+  "failedLoginTimer": "",
+  "otpValidated": ""
+},{
+  "_id": {
+    "$oid": "654772cb91e8348d12d1dc28"
+  },
+  "firstName": "Phú",
+  "lastName": "Lê",
+  "emailAddress": "phugiale2913@gmail.com",
+  "phoneNumber": "0852068833",
+  "accountPassword": "$2b$10$Vl3QlWJDMH1m/j.NChYka.kuVWqRShlyqOEqJ6vSrAU0QJaNmzOX6",
+  "isValidated": false,
+  "failedLoginCounter": 0,
+  "createdAt": {
+    "$date": "2023-11-05T10:47:39.829Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-05T10:47:39.829Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "656a020be4ed0ba7cd4b7f80"
+  },
+  "firstName": "Hoàng",
+  "lastName": "Toàn",
+  "emailAddress": "lupinphu2912@gmail.com",
+  "phoneNumber": "1111111111",
+  "accountPassword": "$2b$10$fwtAqfICJ.CZsRea.6IqEuh5DmfIBNSJFCTFznqfDA7Kbvz9RmLCK",
+  "isValidated": true,
+  "failedLoginCounter": 0,
+  "createdAt": {
+    "$date": "2023-12-01T15:55:55.948Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-01T16:11:33.732Z"
+  },
+  "__v": 0,
+  "otpValidated": ""
+}]
